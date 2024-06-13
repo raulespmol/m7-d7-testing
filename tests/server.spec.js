@@ -1,6 +1,8 @@
 const request = require("supertest");
 const server = require("../index");
 const jwt = require("jsonwebtoken");
+require('dotenv').config()
+const {SECRET} = process.env
 
 describe("Operaciones CRUD de cafes", () => {
   it("Ruta GET /cafes", async () => {
@@ -16,7 +18,7 @@ describe("Operaciones CRUD de cafes", () => {
   })
 
   it("Ruta DELETE /cafes/:id", async () => {
-    const token = jwt.sign({email: "admin@correo.cl"}, "Nanacao")
+    const token = jwt.sign({email: "admin@correo.cl"}, SECRET)
     const response = await request(server)
       .delete('/cafes/21').send()
       .set('Authorization', `Bearer ${token}`)
