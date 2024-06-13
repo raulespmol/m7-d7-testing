@@ -5,7 +5,7 @@ require('dotenv').config()
 const {SECRET} = process.env
 
 describe("Operaciones CRUD de cafes", () => {
-  it("Ruta GET /cafes", async () => {
+  it("GET /cafes - codigo 200, devuelve Array con al menos un objeto", async () => {
     const response = await request(server)
       .get('/cafes')
       .send()
@@ -17,7 +17,7 @@ describe("Operaciones CRUD de cafes", () => {
     expect(body.length).toBeGreaterThan(0)
   })
 
-  it("Ruta DELETE /cafes/:id", async () => {
+  it("DELETE /cafes/:id - codigo 404 si el ID no existe", async () => {
     const token = jwt.sign({email: "admin@correo.cl"}, SECRET)
     const response = await request(server)
       .delete('/cafes/21').send()
@@ -28,7 +28,7 @@ describe("Operaciones CRUD de cafes", () => {
     expect(statusCode).toBe(404)
   })
 
-  it("Ruta POST /cafes", async () => {
+  it("POST /cafes - codigo 201 validar cafe agregado", async () => {
     const cafe = {
       id: 95,
       nombre: "Expreso"
@@ -44,7 +44,7 @@ describe("Operaciones CRUD de cafes", () => {
     expect(body).toContainEqual(cafe)
   })
 
-  it("Ruta PUT /cafes/:id", async () => {
+  it("PUT /cafes/:id - codigo 400 si los ID no coinciden", async () => {
     const cafe = {
       id: 157,
       nombre: "Latte"
