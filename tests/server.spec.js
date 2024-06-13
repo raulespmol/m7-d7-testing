@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken");
 
 describe("Operaciones CRUD de cafes", () => {
   it("Ruta GET /cafes", async () => {
-    const response = await request(server).get('/cafes').send()
+    const response = await request(server)
+      .get('/cafes')
+      .send()
+
     const {statusCode, body} = response
 
     expect(statusCode).toBe(200)
@@ -13,7 +16,11 @@ describe("Operaciones CRUD de cafes", () => {
   })
 
   it("Ruta DELETE /cafes/:id", async () => {
-    const response = await request(server).delete('/cafes/21').send()
+    const token = jwt.sign({email: "admin@correo.cl"}, "Nanacao")
+    const response = await request(server)
+      .delete('/cafes/21').send()
+      .set('Authorization', `Bearer ${token}`)
+
     const {statusCode} = response
 
     expect(statusCode).toBe(404)
@@ -25,7 +32,10 @@ describe("Operaciones CRUD de cafes", () => {
       nombre: "Expreso"
     }
 
-    const response = await request(server).post('/cafes').send(cafe)
+    const response = await request(server)
+      .post('/cafes')
+      .send(cafe)
+
     const {statusCode, body} = response
 
     expect(statusCode).toBe(201)
