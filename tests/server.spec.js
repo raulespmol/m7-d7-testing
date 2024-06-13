@@ -18,7 +18,16 @@ describe("Operaciones CRUD de cafes", () => {
     expect(statusCode).toBe(404)
   })
 
-  it("Ruta POST /cafes", () => {
-    
+  it("Ruta POST /cafes", async () => {
+    const cafe = {
+      id: 95,
+      nombre: "Expreso"
+    }
+
+    const response = await request(server).post('/cafes').send(cafe)
+    const {statusCode, body} = response
+
+    expect(statusCode).toBe(201)
+    expect(body).toContainEqual(cafe)
   })
 });
