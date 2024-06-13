@@ -41,4 +41,20 @@ describe("Operaciones CRUD de cafes", () => {
     expect(statusCode).toBe(201)
     expect(body).toContainEqual(cafe)
   })
+
+  it("Ruta PUT /cafes/:id", async () => {
+    const cafe = {
+      id: 157,
+      nombre: "Latte"
+    }
+
+    const response = await request(server)
+      .put('/cafes/2')
+      .send(cafe)
+
+    const {statusCode, body} = response
+
+    expect(statusCode).toBe(400)
+    expect(body).not.toContainEqual(cafe)
+  })
 });
