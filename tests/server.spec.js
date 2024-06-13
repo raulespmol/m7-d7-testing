@@ -1,5 +1,6 @@
 const request = require("supertest");
 const server = require("../index");
+const jwt = require("jsonwebtoken");
 
 describe("Operaciones CRUD de cafes", () => {
   it("Ruta GET /cafes", async () => {
